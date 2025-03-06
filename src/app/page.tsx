@@ -1,8 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import SearchBar from './SearchBar';
-import AnimeList from './AnimeList';
+import SearchBar from '@/components/SearchBar';
+import AnimeList from '@/components/AnimeList';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+import AnimeModal from '@/components/AnimeModal';
 
 export default function Home() {
   const [filters, setFilters] = useState({
@@ -13,6 +16,8 @@ export default function Home() {
     season: 'Any',
   });
 
+  const isSelectedAnime = useSelector((state: RootState) => state.anime.selectedAnime);
+
   const handleSearch = (newFilters: { searchTerm: string; genre: string; year: string; status: string; season: string }) => {
     setFilters(newFilters);
   };
@@ -21,6 +26,11 @@ export default function Home() {
     <div className="container mx-auto p-4">
       <SearchBar onSearch={handleSearch} />
       <AnimeList {...filters} />
+      {
+        isSelectedAnime && (
+          <AnimeModal animeInfo={isSelectedAnime} />
+        )
+      }
     </div>
   );
 }
