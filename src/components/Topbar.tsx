@@ -21,11 +21,10 @@ export default function Topbar({ tabs, onTabChange }: TopbarProps) {
   };
 
   return (
-    <div className="w-full bg-teal-700 text-white shadow-md">
+    <div className="static z-1000 w-full bg-teal-700 text-white shadow-md">
       <div className="container mx-auto p-4 flex items-center justify-between">
         <h1 className="text-lg font-bold">Aninex</h1>
 
-        {/* Tabs */}
         <div className="flex gap-8">
           {tabs.map((tab) => (
             <button

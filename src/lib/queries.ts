@@ -46,7 +46,6 @@ export const GET_TOP_ANIMES = gql`
     trailer {
       id
       site
-      thumbnail
     }
   }
 `;

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Anime } from '@/interfaces/Anime';
+import { Anime, AnimeCard } from '@/interfaces/Anime';
 
 interface AnimeState {
-  favorites: Anime[];
+  favorites: AnimeCard[];
   topAnimes: {
     season: Anime[];
     popular: Anime[];
@@ -23,7 +23,7 @@ const animeSlice = createSlice({
   name: 'anime',
   initialState,
   reducers: {
-    addToFavorites: (state, action: PayloadAction<Anime>) => {
+    addToFavorites: (state, action: PayloadAction<AnimeCard>) => {
       const anime = action.payload;
       if (!state.favorites.some((fav) => fav.id === anime.id)) {
         state.favorites.push(anime);

@@ -25,7 +25,16 @@ export interface Anime {
   trailer: {
     id: string;
     site: string;
-    thumbnail: string;
+  };
+}
+
+export interface AnimeCard {
+  id: number;
+  coverImage: {
+    large: string;
+  };
+  title: {
+    english: string;
   };
 }
 

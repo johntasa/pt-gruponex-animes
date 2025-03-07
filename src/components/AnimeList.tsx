@@ -3,7 +3,7 @@
 import { useQuery } from '@apollo/client';
 import { GET_TOP_ANIMES } from '@/lib/queries';
 import AnimeCard from './AnimeCard';
-import { Key } from 'react';
+import { Anime } from '@/interfaces/Anime';
 
 interface AnimeListProps {
   searchTerm: string;
@@ -28,22 +28,19 @@ export default function AnimeList ({ searchTerm, genre, year, status }: AnimeLis
       <div>
         <h2 className="font-semibold py-4">POPULAR THIS SEASON</h2>
         <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-          {data.season.media.map((anime: { id: Key | null | undefined; title: { english: string; }; coverImage: { large: string; }; }) => (
+          {data.season.media.map((anime: Anime) => (
             <AnimeCard
               key={anime.id}
-              title={anime.title.english}
-              imageUrl={anime.coverImage.large}
               animeInfo={anime}
             />
           ))}
         </div>
         <h2 className="font-semibold mt-8 py-4">ALL TIME POPULAR</h2>
         <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-          {data.popular.media.map((anime: { id: Key | null | undefined; title: { english: string; }; coverImage: { large: string; }; }) => (
+          {data.popular.media.map((anime: Anime) => (
             <AnimeCard
               key={anime.id}
-              title={anime.title.english}
-              imageUrl={anime.coverImage.large}
+              animeInfo={anime}
             />
           ))}
         </div>
