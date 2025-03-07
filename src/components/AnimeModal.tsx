@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import Image from 'next/image';
 import { setSelectedAnime } from "@/redux/animeSlice";
 import { Anime } from "@/interfaces/Anime";
+import { FavButton } from "./FavButton";
 
 export default function AnimeModal ({ animeInfo }: { animeInfo: Anime }) {
   const dispatch = useDispatch();
@@ -28,16 +29,19 @@ export default function AnimeModal ({ animeInfo }: { animeInfo: Anime }) {
         >
           X
         </button>
-        <div className="p-4 text-black">
-          <div className="text-[#282828] text-3xl font-bold ">
-            <h2>
-              {animeInfo.title.english}
-            </h2>
-            <h2>
-              {animeInfo.title.native}
-            </h2>
+        <div className="p-8 text-black">
+          <div className="flex justify-between items-center">
+            <div className="text-[#282828] text-3xl font-bold ">
+              <h2>
+                {animeInfo.title.english}
+              </h2>
+              <h2>
+                {animeInfo.title.native}
+              </h2>
+            </div>
+            <FavButton animeInfo={animeInfo} size={70} />
           </div>
-          <p className="my-6 text-sm">{cleanDescription}</p>
+          <p className="my-6 text-sm text-justify">{cleanDescription}</p>
           <div className="flex gap-1 sm:gap-8 mb-4">
             <div>
               <p className="font-semibold">Episodes</p>
@@ -65,7 +69,7 @@ export default function AnimeModal ({ animeInfo }: { animeInfo: Anime }) {
             </div>
           </div>
           {animeInfo.trailer && (
-            <div className="flex justify-center mb-4">
+            <div className="flex justify-center">
               <iframe
                 src={`https://www.youtube.com/embed/${animeInfo.trailer.id}`}
                 title="YouTube video player"

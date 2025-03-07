@@ -1,14 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { Anime } from '@/interfaces/Anime';
+import { AnimeCardProps } from '@/interfaces/Anime';
 import { useDispatch } from 'react-redux';
 import { setSelectedAnime } from '@/redux/animeSlice';
 import { FavButton } from './FavButton';
-
-interface AnimeCardProps {
-  animeInfo: Anime;
-}
 
 export default function AnimeCard ({ animeInfo }: AnimeCardProps) {
   const dispatch = useDispatch();
@@ -27,7 +23,7 @@ export default function AnimeCard ({ animeInfo }: AnimeCardProps) {
       </div>
       <div className="pt-3 flex justify-between">
         <h3 className="text-sm font-semibold truncate">{animeInfo.title.english}</h3>
-        <FavButton id={animeInfo.id} title={animeInfo.title.english} imageURL={animeInfo.coverImage.large}/>
+        <FavButton animeInfo={animeInfo}/>
       </div>
     </div>
   );

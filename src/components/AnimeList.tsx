@@ -25,25 +25,23 @@ export default function AnimeList ({ searchTerm, genre, year, status }: AnimeLis
 
   return (
     <>
-      <div>
-        <h2 className="font-semibold py-4">POPULAR THIS SEASON</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-          {data.season.media.map((anime: Anime) => (
-            <AnimeCard
-              key={anime.id}
-              animeInfo={anime}
-            />
-          ))}
-        </div>
-        <h2 className="font-semibold mt-8 py-4">ALL TIME POPULAR</h2>
-        <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-          {data.popular.media.map((anime: Anime) => (
-            <AnimeCard
-              key={anime.id}
-              animeInfo={anime}
-            />
-          ))}
-        </div>
+      <h2 className="font-semibold py-4">POPULAR THIS SEASON</h2>
+      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
+        {data.season.media.map((anime: Anime) => (
+          <AnimeCard
+            key={anime.id}
+            animeInfo={anime}
+          />
+        ))}
+      </div>
+      <h2 className="font-semibold mt-8 py-4">ALL TIME POPULAR</h2>
+      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
+        {data.popular.media.map((anime: Anime) => (
+          <AnimeCard
+            key={anime.id}
+            animeInfo={anime}
+          />
+        ))}
       </div>
     </>
   );

@@ -28,14 +28,9 @@ export interface Anime {
   };
 }
 
-export interface AnimeCard {
-  id: number;
-  coverImage: {
-    large: string;
-  };
-  title: {
-    english: string;
-  };
+export interface AnimeCardProps {
+  animeInfo: Anime;
+  size?: number;
 }
 
 export interface AnimeList {
