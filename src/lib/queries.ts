@@ -51,28 +51,29 @@ export const GET_TOP_ANIMES = gql`
 `;
 
 export const GET_ANIMES = gql`
-  query GetAnimes($search: String, $genreIn: [String], $seasonYear: Int, $status: MediaStatus) {
-    Page(page: 1, perPage: 6) {
-      media(
-        search: $search
-        genre_in: $genreIn
-        seasonYear: $seasonYear
-        status: $status
-        type: ANIME
-        isAdult: false
-      ) {
+  query GetAnimes($page: Int = 1, $search: String, $genre_in: [String], $seasonYear: Int, $season: MediaSeason, $status: MediaStatus) {
+    Page (page: $page, perPage: 20) {
+      pageInfo {
+        total
+        perPage
+        currentPage
+        lastPage
+        hasNextPage
+      }
+      media(search: $search, genre_in: $genre_in, seasonYear: $seasonYear, season: $season, status: $status, type: ANIME, isAdult: false, sort: POPULARITY_DESC) {
         id
+        bannerImage
+        coverImage {
+          large
+        }
         title {
           english
           native
         }
-        coverImage {
-          large
-        }
         description
         episodes
         averageScore
-        status
+        status(version: 2)
         startDate {
           year
           month

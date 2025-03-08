@@ -5,14 +5,7 @@ import { GET_TOP_ANIMES } from '@/lib/queries';
 import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
 
-interface AnimeListProps {
-  searchTerm: string;
-  genre: string;
-  year: string;
-  status: string;
-}
-
-export default function AnimeList ({ searchTerm, genre, year, status }: AnimeListProps) {
+export default function AnimeList () {
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
     variables: {
       season: "WINTER",

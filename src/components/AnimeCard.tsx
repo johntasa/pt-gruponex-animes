@@ -23,7 +23,7 @@ export default function AnimeCard ({ animeInfo }: AnimeCardProps) {
       </div>
       <div className="pt-3 flex justify-between items-center">
         <h3 className="text-sm md:text-base font-semibold truncate flex-1 mr-2">
-          {animeInfo.title.english}
+          {animeInfo.title.english || animeInfo.title.native}
         </h3>
         <FavButton animeInfo={animeInfo}/>
       </div>
