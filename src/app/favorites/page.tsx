@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import AnimeCard from "@/components/AnimeCard";
-import AnimeModal from "@/components/AnimeModal";
+import AnimeModal from "@/components/Modal/AnimeModal";
 
 export default function FavoritesPage() {
   const favorites = useSelector((state: RootState) => state.anime.favorites);
@@ -20,7 +20,7 @@ export default function FavoritesPage() {
       }
       {
         isSelectedAnime && (
-          <AnimeModal animeInfo={isSelectedAnime} />
+          <AnimeModal />
         )
       }
     </div>

@@ -7,30 +7,38 @@ interface AnimeState {
 }
 
 const loadState = (): AnimeState => {
-  try {
-    const serializedState = sessionStorage.getItem('animeState');
-    if (serializedState === null) {
+  if (typeof window !== 'undefined') {
+    try {
+      const serializedState = sessionStorage.getItem('animeState');
+      if (serializedState === null) {
+        return {
+          favorites: [],
+          selectedAnime: null
+        };
+      }
+      return JSON.parse(serializedState);
+    } catch (err) {
+      console.error('Error loading state from sessionStorage:', err);
       return {
         favorites: [],
         selectedAnime: null
       };
     }
-    return JSON.parse(serializedState);
-  } catch (err) {
-    console.error('Error loading state from sessionStorage:', err);
-    return {
-      favorites: [],
-      selectedAnime: null
-    };
   }
+  return {
+    favorites: [],
+    selectedAnime: null
+  };
 };
 
 const saveState = (state: AnimeState) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    sessionStorage.setItem('animeState', serializedState);
-  } catch (err) {
-    console.error('Error saving state to sessionStorage:', err);
+  if (typeof window !== 'undefined') {
+    try {
+      const serializedState = JSON.stringify(state);
+      sessionStorage.setItem('animeState', serializedState);
+    } catch (err) {
+      console.error('Error saving state to sessionStorage:', err);
+    }
   }
 };
 
@@ -53,7 +61,6 @@ const animeSlice = createSlice({
     },
     setSelectedAnime: (state, action: PayloadAction<Anime | null>) => {
       state.selectedAnime = action.payload;
-      saveState(state);
     },
   },
 });

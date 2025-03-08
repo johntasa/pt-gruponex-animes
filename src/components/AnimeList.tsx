@@ -24,25 +24,30 @@ export default function AnimeList ({ searchTerm, genre, year, status }: AnimeLis
   if (error) return <p>Error: {error.message}</p>;
 
   return (
-    <>
-      <h2 className="font-semibold py-4">POPULAR THIS SEASON</h2>
-      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-        {data.season.media.map((anime: Anime) => (
-          <AnimeCard
-            key={anime.id}
-            animeInfo={anime}
-          />
-        ))}
-      </div>
-      <h2 className="font-semibold mt-8 py-4">ALL TIME POPULAR</h2>
-      <div className="grid grid-cols-2 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 gap-4">
-        {data.popular.media.map((anime: Anime) => (
-          <AnimeCard
-            key={anime.id}
-            animeInfo={anime}
-          />
-        ))}
-      </div>
-    </>
+    <div className="space-y-8">
+      <section>
+        <h2 className="font-semibold py-4 text-xl">POPULAR THIS SEASON</h2>
+        <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
+          {data.season.media.map((anime: Anime) => (
+            <AnimeCard
+              key={anime.id}
+              animeInfo={anime}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="font-semibold py-4 text-xl">ALL TIME POPULAR</h2>
+        <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
+          {data.popular.media.map((anime: Anime) => (
+            <AnimeCard
+              key={anime.id}
+              animeInfo={anime}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
   );
 };

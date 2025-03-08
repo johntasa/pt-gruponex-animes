@@ -1,6 +1,6 @@
 'use client';
 
-import TabLinks from "./tab-links";
+import TabLinks from "./TabLinks";
 
 export default function Topbar() {
   return (

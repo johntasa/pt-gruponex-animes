@@ -5,7 +5,7 @@ import SearchBar from '@/components/SearchBar';
 import AnimeList from '@/components/AnimeList';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import AnimeModal from '@/components/AnimeModal';
+import AnimeModal from '@/components/Modal/AnimeModal';
 
 export default function Home() {
   const [filters, setFilters] = useState({
@@ -28,7 +28,7 @@ export default function Home() {
       <AnimeList {...filters} />
       {
         isSelectedAnime && (
-          <AnimeModal animeInfo={isSelectedAnime} />
+          <AnimeModal />
         )
       }
     </div>
