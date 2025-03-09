@@ -3,7 +3,7 @@ import { addToFavorites, removeFromFavorites } from "@/redux/animeSlice";
 import { RootState } from "@/redux/store";
 import { AnimeCardProps } from "@/interfaces/Anime";
 
-export function FavButton ({ animeInfo, size = 24 }: AnimeCardProps) {
+export default function FavButton ({ animeInfo, size = 24 }: AnimeCardProps) {
   const dispatch = useDispatch();
 
   const favorites = useSelector((state: RootState) => state.anime.favorites);

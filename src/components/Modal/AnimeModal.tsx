@@ -1,10 +1,10 @@
-import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useDispatch, useSelector } from "react-redux"
 import Image from 'next/image'
 import { setSelectedAnime } from "@/redux/animeSlice"
-import { FavButton } from "@/components/FavButton"
-import AnimeDetails from './AnimeDetails'
 import { RootState } from '@/redux/store'
+import AnimeDetails from './AnimeDetails'
+import FavButton from "@/components/UI/FavButton"
+import CrossButton from '@/components/UI/CrossButton'
 
 export default function AnimeModal() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const selectedAnime = useSelector((state: RootState) => {
   return anime;
 });
 
-  const cleanDescription = selectedAnime.description.replace(/<[^>]*>?/gm, '') || '';
+  const cleanDescription = selectedAnime?.description.replace(/<[^>]*>?/gm, '') || '';
   const handleClose = () => dispatch(setSelectedAnime(null));
 
   return (
@@ -31,13 +31,7 @@ const selectedAnime = useSelector((state: RootState) => {
           alt={`${selectedAnime.title.english} Banner`}
           priority
         />
-        <button
-          onClick={handleClose}
-          className="absolute top-2.5 right-2.5 rounded-full p-2 bg-teal-700 text-white hover:bg-teal-800 transition-colors"
-          aria-label="Close modal"
-        >
-          <XMarkIcon className="h-6 w-6" />
-        </button>
+        <CrossButton exectFunct={handleClose} calledFrom={"modal"} />
         <div className="p-8">
           <div className="flex justify-between items-start mb-6">
             <div className="text-[#282828]">
@@ -46,11 +40,8 @@ const selectedAnime = useSelector((state: RootState) => {
             </div>
             <FavButton animeInfo={selectedAnime} size={70} />
           </div>
-
           <p className="my-6 text-sm text-justify leading-relaxed">{cleanDescription}</p>
-        
           <AnimeDetails animeInfo={selectedAnime} />
-
           {selectedAnime.trailer && (
             <div className="flex justify-center mt-8">
               <iframe

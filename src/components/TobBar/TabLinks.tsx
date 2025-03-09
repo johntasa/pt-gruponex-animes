@@ -17,7 +17,7 @@ export default function NavLinks() {
             className='relative p-1'
           >
             <p className={clsx(
-              'text-2xl text-gray-300 hover:text-white',
+              ' text-gray-300 hover:text-white sm:text-2xl',
               {
                 'text-white after:absolute after:bottom-0 after:left-0 after:w-full after:h-[5px] after:bg-pink-500':
                   pathname === tab.href,

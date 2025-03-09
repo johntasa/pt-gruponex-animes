@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { GET_TOP_ANIMES } from '@/lib/queries';
 import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
+import Loader from './UI/Loader';
 
 export default function AnimeList () {
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
@@ -13,7 +14,7 @@ export default function AnimeList () {
     },
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (

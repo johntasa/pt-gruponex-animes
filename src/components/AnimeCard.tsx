@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { AnimeCardProps } from '@/interfaces/Anime';
 import { useDispatch } from 'react-redux';
 import { setSelectedAnime } from '@/redux/animeSlice';
-import { FavButton } from './FavButton';
+import FavButton from '@/components/UI/FavButton';
 
 export default function AnimeCard ({ animeInfo }: AnimeCardProps) {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export default function AnimeCard ({ animeInfo }: AnimeCardProps) {
       <div className="relative aspect-[3/4] w-full">
         <Image
           src={animeInfo.coverImage.large}
-          alt={animeInfo.title.english}
+          alt={animeInfo.title.english || "Cover image of anime"}
           fill
           priority
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"

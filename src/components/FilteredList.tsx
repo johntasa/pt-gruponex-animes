@@ -1,28 +1,64 @@
 'use client';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
 import { RootState } from '@/redux/store';
+import CrossButton from './UI/CrossButton';
+import { setAnimeList, setFilters, setNoResults } from '@/redux/animeSlice';
+import NoResults from './UI/NoResultsMessage';
 
-export default function FilteredList () {
-  const { filteredAnimes } = useSelector((state: RootState) => state.anime);
+export default function FilteredList() {
+  const { filteredAnimes, noResults, filters } = useSelector((state: RootState) => state.anime);
+  const dispatch = useDispatch();
+  
+  const getActiveFilters = () => {
+    const activeFilters = [];
+    if (filters.searchTerm) activeFilters.push(`Search: ${filters.searchTerm}`);
+    if (filters.genre && filters.genre !== 'Any') activeFilters.push(`Genre: ${filters.genre}`);
+    if (filters.year && filters.year !== 'Any') activeFilters.push(`Year: ${filters.year}`);
+    if (filters.status && filters.status !== 'Any') activeFilters.push(`Status: ${filters.status}`);
+    if (filters.season && filters.season !== 'Any') activeFilters.push(`Season: ${filters.season}`);
+    
+    return activeFilters.join(' | ');
+  };
+
+  const removeFilters = () => {
+    dispatch(setAnimeList([]));
+    dispatch(setNoResults(false));
+    dispatch(
+      setFilters({
+        searchTerm: '',
+        year: 'Any',
+        genre: 'Any',
+        status: 'Any',
+        season: 'Any',
+      })
+    );
+  };
 
   return (
     <div className="space-y-8">
       <section>
-        <div>
-          <h2 className="font-bold mb-8">Results for:</h2>
+        <div className="flex gap-5 mb-8 h-7">
+          <h2 className="font-bold">Results for:</h2>
+          <p>{getActiveFilters()}</p>
+          <CrossButton exectFunct={removeFilters} calledFrom={"filters"} />
         </div>
-        <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
-          {filteredAnimes.map((anime: Anime) => (
-            <AnimeCard
-              key={anime.id}
-              animeInfo={anime}
-            />
-          ))}
-        </div>
+        { noResults
+          ? <NoResults message={"No results for your filters"}/>
+          : (
+            <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
+              {filteredAnimes.map((anime: Anime) => (
+                <AnimeCard
+                  key={anime.id}
+                  animeInfo={anime}
+                />
+              ))}
+            </div>
+          )
+        }
       </section>
     </div>
   );
-};
+}

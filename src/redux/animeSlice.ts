@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Anime } from '@/interfaces/Anime';
+import { PageInfo } from '@/interfaces/PageInfo';
 import { SearchFilters } from '@/interfaces/Filters';
 
 interface AnimeState {
   favorites: Anime[];
   selectedAnime: Anime | null;
   filters: SearchFilters;
-  filteredAnimes: Anime[];  // New property
-  loading: boolean;    // New property
-  error: string | null; // New property
+  filteredAnimes: Anime[];
+  loading: boolean;
+  error: string | null;
+  noResults: boolean;
+  pageInfo: PageInfo;
 }
 
 const emptyState: AnimeState = {
@@ -23,7 +26,16 @@ const emptyState: AnimeState = {
   },
   filteredAnimes: [],
   loading: false,
-  error: null
+  error: null,
+  noResults: false,
+  pageInfo: {
+    total: 0,
+    perPage: 0,
+    currentPage: 0,
+    lastPage: 0,
+    hasNextPage: false,
+    __typename: 'PageInfo'
+  }
 };
 
 const loadState = (): AnimeState => {
@@ -83,7 +95,17 @@ const animeSlice = createSlice({
       };
     },
     setAnimeList: (state, action: PayloadAction<Anime[]>) => {
-      state.filteredAnimes = action.payload;
+      if (JSON.stringify(state.filteredAnimes) !== JSON.stringify(action.payload)) {
+        state.filteredAnimes = action.payload;
+        state.noResults = action.payload.length === 0;
+      }
+    },
+    setPageInfo: (state, action: PayloadAction<PageInfo>) => {
+      state.pageInfo = action.payload;
+      state.noResults = action.payload.total === 0;
+    },
+    setNoResults: (state, action: PayloadAction<boolean>) => {
+      state.noResults = action.payload;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -100,6 +122,8 @@ export const {
   setSelectedAnime, 
   setFilters,
   setAnimeList,
+  setPageInfo,
+  setNoResults,
   setLoading,
   setError 
 } = animeSlice.actions;
