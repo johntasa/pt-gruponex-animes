@@ -1,7 +1,7 @@
 'use client';
 
 import { ApolloProvider } from '@apollo/client';
-import client from '@/lib/apolloClient';
+import client from '@/api/apolloClient';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
 import Topbar from '@/components/TobBar/Topbar';

@@ -1,14 +1,8 @@
 import { useSearchFilters } from "@/hooks/useFilters";
-import { SearchFilters } from "@/interfaces/Filters";
+import { SearchFilters, SelectProps } from "@/interfaces/Filters";
+import { formatText } from "@/utils/utils";
 
-interface SelectProps {
-  id: string;
-  label: string;
-  value: string;
-  options: string[];
-}
-
-export default function UISelect ({id, label, value, options}: SelectProps) {
+export default function UISelect({id, label, value, options}: SelectProps) {
   const { updateFilter } = useSearchFilters();
 
   return (
@@ -25,7 +19,7 @@ export default function UISelect ({id, label, value, options}: SelectProps) {
         <option value="Any">Any</option>
         {options.map((option) => (
           <option key={option} value={option}>
-            {option}
+            {formatText(option)}
           </option>
         ))}
       </select>

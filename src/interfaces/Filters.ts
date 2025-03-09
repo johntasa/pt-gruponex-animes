@@ -5,3 +5,10 @@ export interface SearchFilters {
   status: string;
   season: string;
 }
+
+export interface SelectProps {
+  id: string;
+  label: string;
+  value: string;
+  options: string[];
+}

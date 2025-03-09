@@ -2,7 +2,7 @@ import { SearchFilters } from "@/interfaces/Filters";
 import { useDispatch, useSelector } from "react-redux";
 import { setAnimeList, setError, setFilters, setLoading, setPageInfo } from "@/redux/animeSlice";
 import { useQuery } from "@apollo/client";
-import { GET_ANIMES } from "@/lib/queries";
+import { GET_ANIMES } from "@/api/queries";
 import { RootState } from "@/redux/store";
 import { useEffect, useState, useCallback } from "react";
 import debounce from 'just-debounce-it'

@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@apollo/client';
-import { GET_TOP_ANIMES } from '@/lib/queries';
+import { GET_TOP_ANIMES } from '@/api/queries';
 import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
 import Loader from './UI/Loader';
