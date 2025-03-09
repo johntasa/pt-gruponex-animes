@@ -1,21 +1,32 @@
 'use client';
 
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { GET_TOP_ANIMES } from '@/api/queries';
 import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
 import Loader from './UI/Loader';
+import { useSearchFilters } from '@/hooks/useSearchFilters';
+import { useEffect } from 'react';
 
-export default function AnimeList () {
-  const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
-    variables: {
-      season: "WINTER",
-      seasonYear: 2025,
-    },
-  });
+export default function AnimeList() {
+  const { hasActiveFilters } = useSearchFilters();
+  
+  const [getTopAnimes, { loading, error, data }] = useLazyQuery(GET_TOP_ANIMES);
+
+  useEffect(() => {
+    if (!hasActiveFilters) {
+      getTopAnimes({
+        variables: {
+          season: "WINTER",
+          seasonYear: 2025,
+        }
+      });
+    }
+  }, [hasActiveFilters, getTopAnimes]);
 
   if (loading) return <Loader />;
   if (error) return <p>Error: {error.message}</p>;
+  if (!data) return <Loader />;
 
   return (
     <div className="space-y-8">

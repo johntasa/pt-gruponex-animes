@@ -7,9 +7,10 @@ import AnimeList from '@/components/AnimeList';
 import AnimeModal from '@/components/Modal/AnimeModal';
 import FilteredList from '@/components/FilteredList';
 import Loader from '@/components/UI/Loader';
+import { Suspense } from 'react';
 
-export default function Home() {
-  const { selectedAnime, loading, filteredAnimes, error, noResults } = useSelector((state: RootState) => state.anime);
+function HomeContent() {
+  const { selectedAnime, loading, error, hasResults, filteredAnimes } = useSelector((state: RootState) => state.anime);
 
   const renderContent = () => {
     if (loading) {
@@ -23,17 +24,26 @@ export default function Home() {
         </div>
       );
     }
-
-    return filteredAnimes.length > 0 || noResults ? <FilteredList /> : <AnimeList />;
+    return !hasResults || filteredAnimes.length === 0 ? <AnimeList /> : <FilteredList />;
   };
 
   return (
-    <main className="container mx-auto p-4 min-h-screen">
+    <>
       <FiltersBar />
       <div className="my-8">
         {renderContent()}
       </div>
       {selectedAnime && <AnimeModal />}
+    </>
+  );
+}
+
+export default function Home() {
+  return (
+    <main className="container mx-auto p-4 min-h-screen">
+      <Suspense fallback={<Loader />}>
+        <HomeContent />
+      </Suspense>
     </main>
   );
 }

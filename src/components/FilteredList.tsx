@@ -5,11 +5,12 @@ import AnimeCard from './AnimeCard';
 import { Anime } from '@/interfaces/Anime';
 import { RootState } from '@/redux/store';
 import CrossButton from './UI/CrossButton';
-import { setAnimeList, setFilters, setNoResults } from '@/redux/animeSlice';
+import { setAnimeList, setFilters, setHasResults } from '@/redux/animeSlice';
 import NoResults from './UI/NoResultsMessage';
+import Pagination from './UI/PaginationButtons';
 
 export default function FilteredList() {
-  const { filteredAnimes, noResults, filters } = useSelector((state: RootState) => state.anime);
+  const { filteredAnimes, hasResults, filters, pageInfo } = useSelector((state: RootState) => state.anime);
   const dispatch = useDispatch();
   
   const getActiveFilters = () => {
@@ -25,7 +26,7 @@ export default function FilteredList() {
 
   const removeFilters = () => {
     dispatch(setAnimeList([]));
-    dispatch(setNoResults(false));
+    dispatch(setHasResults(false));
     dispatch(
       setFilters({
         searchTerm: '',
@@ -45,18 +46,23 @@ export default function FilteredList() {
           <p>{getActiveFilters()}</p>
           <CrossButton exectFunct={removeFilters} calledFrom={"filters"} />
         </div>
-        { noResults
-          ? <NoResults message={"No results for your filters"}/>
-          : (
-            <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
-              {filteredAnimes.map((anime: Anime) => (
-                <AnimeCard
-                  key={anime.id}
-                  animeInfo={anime}
-                />
-              ))}
-            </div>
+        { hasResults
+          ? (
+            <>
+              <div className="grid grid-cols-2 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 gap-4">
+                {filteredAnimes.map((anime: Anime) => (
+                  <AnimeCard
+                    key={anime.id}
+                    animeInfo={anime}
+                  />
+                ))}
+              </div>
+              {pageInfo.lastPage > 1 && (
+                <Pagination {...pageInfo} />
+              )}
+            </>
           )
+          : <NoResults message={"No results for your filters"}/>
         }
       </section>
     </div>

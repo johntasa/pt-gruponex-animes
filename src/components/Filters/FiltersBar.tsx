@@ -4,18 +4,17 @@ import {
   YEARS,
   SEASONS
 } from '@/utils/constants';
-import { useSearchFilters } from '@/hooks/useFilters';
+import { useSearchFilters } from '@/hooks/useSearchFilters';
 import UISelect from './UISelect';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-
 
 export default function FiltersBar() {
   const filters = useSelector((state: RootState) => state.anime.filters);
   const { updateFilter } = useSearchFilters();
 
   return (
-    <div className="my-8">
+    <div className="mt-24 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div>
           <label htmlFor="searchTerm" className="block text-sm font-bold mb-1">
